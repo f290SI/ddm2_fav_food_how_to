@@ -1,3 +1,5 @@
+import 'ingredient.dart';
+
 class Recipe {
   String label;
   String imageUrl;
@@ -23,7 +25,6 @@ class Recipe {
         Ingredient(1, 'can', 'Tomato Soup'),
       ],
     ),
-    // Recipe('Grilled Cheese', 'assets/grilled-cheese.jpg'),
     Recipe(
       'Chocolate Chip Cookies',
       'assets/images/chocolate-chip-cookies.jpg',
@@ -53,12 +54,4 @@ class Recipe {
       ],
     ),
   ];
-}
-
-class Ingredient {
-  double quantity;
-  String measure;
-  String name;
-
-  Ingredient(this.quantity, this.measure, this.name);
 }

@@ -153,7 +153,6 @@ class Recipe {
         Ingredient(1, 'can', 'Tomato Soup'),
       ],
     ),
-    // Recipe('Grilled Cheese', 'assets/grilled-cheese.jpg'),
     Recipe(
       'Chocolate Chip Cookies',
       'assets/images/chocolate-chip-cookies.jpg',
@@ -185,7 +184,7 @@ class Recipe {
   ];
 }
 ```
-4. 3. No arquivo `ingredient.dart`, adicione o trecho abaixo:
+4. No arquivo `ingredient.dart`, adicione o trecho abaixo:
 ```dart
 class Ingredient {
   double quantity;
@@ -195,5 +194,153 @@ class Ingredient {
   Ingredient(this.quantity, this.measure, this.name);
 }
 ```
+
+### Step 05 - Ajustar o Widget com os dados dos Models
+1. No arquivo `recipe_card_widget.dart`, adicione o atributo `recipe` e o construtor de classe que o receba como argumento nomeado.
+```dart
+  final Recipe recipe;
+
+  const RecipeCardWidget({this.recipe});
+``` 
+2. Altere o conteúdo dos Widgets relativos à imagem da receita e o título com base no objeto recebido pelo construtor.
+```
+...
+image: AssetImage(recipe.imageUrl),
+
+...
+Text(recipe.label, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+```
+3. A classe deverá estar assim:
+```dart
+import 'package:ddm2_my_favorite_recipes/model/recipe.dart';
+import 'package:flutter/material.dart';
+
+class RecipeCardWidget extends StatelessWidget {
+
+  final Recipe recipe;
+
+  const RecipeCardWidget({this.recipe});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Image(
+              height: 250,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              image: AssetImage(recipe.imageUrl),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(recipe.label,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+### Step 06 - Assets de Imagem
+Agora iremos adicionar as imagens ao projeto; podemos utilizar imagens locais ou imagens da web.
+1. Abra o arquivo `pubspec.yaml` e adicione o trecho relativo aos `assets`.
+```yaml
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+```
+2. Este é o o arquivo na integra.
+```yaml
+name: ddm2_my_favorite_recipes
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+```
+3. Crie o diretório `assets/images` na raiz do progeto.
+4. Salve o projeto e execute o comando `flutter pub get` no *terminal*.
+5. Adicione as fotografias de suas receitas no projeto, dentro da pasta `assets/images`.
+6. Modifique os nomes das imagens no arquivo `model/recipe.dart`, conforme as imagens escolhidas.
+````dart
+Recipe(
+      'Spaghetti and Meatballs',
+      'assets/images/nome_da_imagem.jpg',
+      [
+        Ingredient(1, 'pacote', 'Spaghetti'),
+        Ingredient(4, '', 'Almondegas'),
+        Ingredient(0.5, 'lata', 'molho de tomate ao sugo'),
+      ],
+    ),
+````
+
+### Step 07 - Atualizar a Home
+Atualize a `HomePage` para que seja utilizado o nosso `RecipecardWidget`, com o código já desacoplado e mais bem estruturado.
+
+````dart
+import 'package:ddm2_my_favorite_recipes/model/recipe.dart';
+import 'package:ddm2_my_favorite_recipes/pages/home_page/widgets/recipe_card_widget.dart';
+import 'package:flutter/material.dart';
+
+class HomePage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.white,
+        accentColor: Colors.black,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('My FavFood'),
+        ),
+        body: SafeArea(
+          child: ListView.builder(
+            itemCount: Recipe.samples.length,
+            itemBuilder: (context, int index) {
+              var recipe = Recipe.samples[index];
+              return RecipeCardWidget(recipe: recipe,);
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.favorite),
+        ),
+      ),
+    );
+  }
+}
+````
+
+
 
 
