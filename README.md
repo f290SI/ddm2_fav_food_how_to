@@ -290,7 +290,7 @@ flutter:
 4. Salve o projeto e execute o comando `flutter pub get` no *terminal*.
 5. Adicione as fotografias de suas receitas no projeto, dentro da pasta `assets/images`.
 6. Modifique os nomes das imagens no arquivo `model/recipe.dart`, conforme as imagens escolhidas.
-````dart
+```dart
 Recipe(
       'Spaghetti and Meatballs',
       'assets/images/nome_da_imagem.jpg',
@@ -300,12 +300,12 @@ Recipe(
         Ingredient(0.5, 'lata', 'molho de tomate ao sugo'),
       ],
     ),
-````
+```
 
 ### Step 07 - Atualizar a Home
 Atualize a `HomePage` para que seja utilizado o nosso `RecipecardWidget`, com o código já desacoplado e mais bem estruturado.
 
-````dart
+```dart
 import 'package:ddm2_my_favorite_recipes/model/recipe.dart';
 import 'package:ddm2_my_favorite_recipes/pages/home_page/widgets/recipe_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -339,7 +339,92 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-````
+```
+### Step 08 - Navegação
+O Flutter permite a navegação entre telas de forma simples utilizando o conceito de pilha, ou seja as telas são empilhadas umas sobre as outras e este processo é bem simples no Flutter.
+
+1. Crie a página `RecipeDetailPage`, esta irá exibir os demais dados do model `Recipe`, primeiro crie a pasta `page/detail_page` depois o arquivo `recipe_detail_page.dart`.
+2. Adicione o trecho abaixo:
+```dart
+import 'package:flutter/material.dart';
+
+class RecipeDetailPage extends StatefulWidget {
+  final Recipe recipe;
+
+  const RecipeDetailPage({Key key, this.recipe}) : super(key: key);
+
+  @override
+  _RecipeDetailPageState createState() => _RecipeDetailPageState();
+}
+
+class _RecipeDetailPageState extends State<RecipeDetailPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.recipe.label),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: Image(
+                fit: BoxFit.cover,
+                image: AssetImage(widget.recipe.imageUrl),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              widget.recipe.label,
+              style: TextStyle(fontSize: 18),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: widget.recipe.ingredients.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final ingredient = widget.recipe.ingredients[index];
+                    return Text('${ingredient.quantity} ${ingredient.measure}');
+                  }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+```
+#### Realize a navegação
+1. Envolva o `RecipeCardWidget`, na `HomePage`com um `GestureDetector`, este Widget irá fornecer a capacidade de reagir à eventos de toque, o nosso Card. O `MaterialPageRoute` se encarrega do trabalho entre as transições de telas.
+```
+...
+  return GestureDetector(
+    child: RecipeCardWidget(
+      recipe: recipe,
+    ),
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RecipeDetailPage(
+            recipe: recipe,
+          ),
+        ),
+      );
+    },
+  );
+...
+```
+
+# To be continue...
+Na continuação, iremos melhorar o Design das listas, configurar os temas com as cores que voces escolheram e utilizar fontes customizadas do pacote GoogleFonts.
+
+Até a próxima aula!
 
 
 

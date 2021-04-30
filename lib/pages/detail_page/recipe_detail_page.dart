@@ -1,16 +1,16 @@
 import 'package:ddm2_my_favorite_recipes/model/recipe.dart';
 import 'package:flutter/material.dart';
 
-class RecipeDetail extends StatefulWidget {
+class RecipeDetailPage extends StatefulWidget {
   final Recipe recipe;
 
-  const RecipeDetail({Key key, this.recipe}) : super(key: key);
+  const RecipeDetailPage({Key key, this.recipe}) : super(key: key);
 
   @override
-  _RecipeDetailState createState() => _RecipeDetailState();
+  _RecipeDetailPageState createState() => _RecipeDetailPageState();
 }
 
-class _RecipeDetailState extends State<RecipeDetail> {
+class _RecipeDetailPageState extends State<RecipeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
