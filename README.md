@@ -5,7 +5,7 @@ App de receitas favoritas.
 ## Vamos começar
 
 ### Step 0 - Novo Projeto
-Como de costume, crie um novo projeto em sua IDE favorira ou no (DartPad)[https://dartpad.dev/flutter?null_safety=true]
+Como de costume, crie um novo projeto em sua IDE favorira ou no [DartPad](https://dartpad.dev/flutter?null_safety=true)
 
 ### Step 01 - Alterar a página principal
 Criar o método principal do App, desacoplando-o do Widget da página inicial.
