@@ -505,6 +505,15 @@ class HomePage extends StatelessWidget {
 ```
 
 #### Atualizando a DetailPage
+1. Adicione a dependencia do GoogleFonts; inclua-a no `pubspec.yaml`, apenas a linha do google..
+```dart
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  google_fonts: ^2.0.0
+```
 ```dart
 class RecipeDetailPage extends StatefulWidget {
   final Recipe recipe;
