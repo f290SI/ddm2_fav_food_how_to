@@ -5,8 +5,11 @@ class Recipe {
   String imageUrl;
   int servings;
   List<Ingredient> ingredients;
+  String directions;
 
-  Recipe(this.label, this.imageUrl, this.ingredients);
+  static final lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sapien urna, feugiat a augue vel, faucibus fermentum elit. Etiam feugiat lobortis metus ut luctus. Maecenas sed suscipit nunc. Morbi ultrices, turpis eget accumsan porta, mauris arcu molestie urna, ut eleifend eros ante a justo. Sed convallis quam vel nisi pellentesque, ut cursus nisl interdum. Vivamus ac condimentum enim. Aliquam feugiat, erat vel cursus lacinia, dolor lorem ullamcorper quam, sed pellentesque nunc sem a arcu. Sed nec bibendum tortor.';
+
+  Recipe(this.label, this.imageUrl, this.ingredients, {this.directions});
 
   static var samples = [
     Recipe(
@@ -17,6 +20,7 @@ class Recipe {
         Ingredient(4, '', 'Frozen Meatballs'),
         Ingredient(0.5, 'jar', 'sauce'),
       ],
+      directions: lorem
     ),
     Recipe(
       'Tomato Soup',
@@ -24,6 +28,7 @@ class Recipe {
       [
         Ingredient(1, 'can', 'Tomato Soup'),
       ],
+        directions: lorem
     ),
     Recipe(
       'Chocolate Chip Cookies',
@@ -33,6 +38,7 @@ class Recipe {
         Ingredient(2, 'cups', 'sugar'),
         Ingredient(0.5, 'cups', 'chocolate chips'),
       ],
+        directions: lorem
     ),
     Recipe(
       'Taco Salad',
@@ -43,6 +49,7 @@ class Recipe {
         Ingredient(0.5, 'cup', 'cheese'),
         Ingredient(0.25, 'cup', 'chopped tomatoes'),
       ],
+        directions: lorem
     ),
     Recipe(
       'Hawaiian Pizza',
@@ -52,6 +59,7 @@ class Recipe {
         Ingredient(1, 'cup', 'pineapple'),
         Ingredient(8, 'oz', 'ham'),
       ],
+        directions: lorem
     ),
   ];
 }

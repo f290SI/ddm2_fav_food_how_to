@@ -1,5 +1,6 @@
 import 'package:ddm2_my_favorite_recipes/model/recipe.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RecipeDetailPage extends StatefulWidget {
   final Recipe recipe;
@@ -19,6 +20,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       ),
       body: SafeArea(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
               height: 300,
@@ -28,21 +30,55 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                 image: AssetImage(widget.recipe.imageUrl),
               ),
             ),
-            SizedBox(
-              height: 8,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                widget.recipe.label,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Modo de Preparo',
+                style: GoogleFonts.oswald(
+                  color: Colors.indigo,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Text(
+                widget.recipe.directions,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
             ),
             Text(
-              widget.recipe.label,
-              style: TextStyle(fontSize: 18),
+              'Ingredients',
+              style: GoogleFonts.oswald(
+                color: Colors.indigo,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             Expanded(
               child: ListView.builder(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: widget.recipe.ingredients.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final ingredient = widget.recipe.ingredients[index];
-                    return Text('${ingredient.quantity} ${ingredient.measure}');
-                  }),
+                padding: const EdgeInsets.all(8),
+                itemCount: widget.recipe.ingredients.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final ingredient = widget.recipe.ingredients[index];
+                  return Text(
+                    '${ingredient.quantity} ${ingredient.measure}',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),

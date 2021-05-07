@@ -10,18 +10,16 @@ class RecipeCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      clipBehavior: Clip.antiAlias,
       elevation: 2,
-      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image(
-              height: 250,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              image: AssetImage(recipe.imageUrl),
-            ),
+          Image(
+            height: 250,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            image: AssetImage(recipe.imageUrl),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),

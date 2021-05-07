@@ -420,10 +420,180 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   );
 ...
 ```
+#### Adicionando o modo de preparo
+
+Vamos adicionar o modo de preparo das receitas.
+
+1. Atualizar a model class `Recipe`; adicione o atributo directions e a variavel estatica lorem, o lorem ira apenas mockar o odo de preparo em nosso model.
+```dart
+String directions;
+
+static final lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sapien urna, feugiat a augue vel, faucibus fermentum elit. Etiam feugiat lobortis metus ut luctus. Maecenas sed suscipit nunc. Morbi ultrices, turpis eget accumsan porta, mauris arcu molestie urna, ut eleifend eros ante a justo. Sed convallis quam vel nisi pellentesque, ut cursus nisl interdum. Vivamus ac condimentum enim. Aliquam feugiat, erat vel cursus lacinia, dolor lorem ullamcorper quam, sed pellentesque nunc sem a arcu. Sed nec bibendum tortor.';
+```
+2. Atualize o contrutor de classe com um atributo opcional, o directions:
+```dart
+Recipe(this.label, this.imageUrl, this.ingredients, {this.directions});
+```
+3. Em cada objeto da lista de receitas, `samples`, adicione o atributo directions conforme o exemplo abaixo:
+```dart
+Recipe(
+  'Spaghetti and Meatballs',
+  'assets/images/spageutti-meatballs.jpg',
+  [
+    Ingredient(1, 'box', 'Spaghetti'),
+    Ingredient(4, '', 'Frozen Meatballs'),
+    Ingredient(0.5, 'jar', 'sauce'),
+  ],
+  directions: lorem
+),
+```
+
+#### Atualizando a HomePage
+
+```dart
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.red,
+        accentColor: Colors.lightGreenAccent,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('My FavFood'),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: ListView.builder(
+              itemCount: Recipe.samples.length,
+              itemBuilder: (context, int index) {
+                var recipe = Recipe.samples[index];
+                return GestureDetector(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: RecipeCardWidget(
+                      recipe: recipe,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RecipeDetailPage(
+                          recipe: recipe,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+
+          },
+          child: Icon(Icons.favorite),
+        ),
+      ),
+    );
+  }
+}
+```
+
+#### Atualizando a DetailPage
+```dart
+class RecipeDetailPage extends StatefulWidget {
+  final Recipe recipe;
+
+  const RecipeDetailPage({Key key, this.recipe}) : super(key: key);
+
+  @override
+  _RecipeDetailPageState createState() => _RecipeDetailPageState();
+}
+
+class _RecipeDetailPageState extends State<RecipeDetailPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.recipe.label),
+      ),
+      body: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: Image(
+                fit: BoxFit.cover,
+                image: AssetImage(widget.recipe.imageUrl),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                widget.recipe.label,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Modo de Preparo',
+                style: GoogleFonts.oswald(
+                  color: Colors.indigo,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Text(
+                widget.recipe.directions,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            Text(
+              'Ingredients',
+              style: GoogleFonts.oswald(
+                color: Colors.indigo,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: widget.recipe.ingredients.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final ingredient = widget.recipe.ingredients[index];
+                  return Text(
+                    '${ingredient.quantity} ${ingredient.measure}',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
 
 # To be continue...
-Na continuação, iremos melhorar o Design das listas, configurar os temas com as cores que voces escolheram e utilizar fontes customizadas do pacote GoogleFonts.
-
+Na continuação, irei detalhar os passos até aqui, mas voce podem conferir as explicações no video da aula até eu detalhar os passos netes tutorial.
 Até a próxima aula!
 
 
